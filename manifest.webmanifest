@@ -1,0 +1,18 @@
+{
+  "name": "TrocaFigs 26",
+  "short_name": "TrocaFigs",
+  "description": "Organizador independente de figurinhas 2026 com faltantes, repetidas e WhatsApp.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f2df",
+  "theme_color": "#0f7b63",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

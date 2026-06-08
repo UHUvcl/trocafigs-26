@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#083f36" />
+    <meta
+      name="description"
+      content="Organizador independente de figurinhas 2026 com faltantes, repetidas, backup e compartilhamento por WhatsApp."
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="TrocaFigs" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon.svg" />
+    <link rel="stylesheet" href="./styles.css?v=8" />
+    <title>TrocaFigs 26</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup" aria-label="TrocaFigs 26">
+          <span class="brand-ball" aria-hidden="true">26</span>
+          <div>
+            <p class="eyebrow">organizador independente</p>
+            <h1>TrocaFigs</h1>
+          </div>
+        </div>
+        <button class="install-button" id="installButton" type="button" hidden>Instalar</button>
+      </header>
+
+      <main>
+        <section class="hero-panel album-cover" aria-labelledby="summaryTitle">
+          <div class="cover-left">
+            <p class="season-pill">Coleção 2026</p>
+            <h2 id="summaryTitle">Abra, marque, troque.</h2>
+            <p>
+              Um álbum digital rápido para controlar figurinhas, repetidas e trocas sem planilha.
+            </p>
+            <div class="hero-actions" aria-label="Atalhos principais">
+              <button class="ghost-button" type="button" data-jump-view="missing">Faltantes</button>
+              <button class="ghost-button" type="button" data-jump-view="duplicates">Repetidas</button>
+            </div>
+          </div>
+          <div class="cover-art" aria-hidden="true">
+            <span class="mock-sticker one"></span>
+            <span class="mock-sticker two"></span>
+            <span class="mock-sticker three"></span>
+            <span class="field-line"></span>
+          </div>
+          <div class="progress-ring" aria-label="Progresso do álbum">
+            <svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-value" id="progressCircle" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div>
+              <strong id="progressPercent">0%</strong>
+              <span>completo</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Resumo">
+          <article class="stat-card">
+            <span>Tenho</span>
+            <strong id="ownedCount">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Faltam</span>
+            <strong id="missingCount">980</strong>
+          </article>
+          <article class="stat-card">
+            <span>Repetidas</span>
+            <strong id="duplicateCount">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Total</span>
+            <strong id="totalCount">980</strong>
+          </article>
+        </section>
+
+        <section class="quick-panel pack-panel" aria-labelledby="quickTitle">
+          <div class="pack-burst" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">modo pacote</p>
+              <h2 id="quickTitle">Cadastre uma pilha de uma vez</h2>
+              <p>Digite, cole ou leia os códigos em sequência. Exemplos: BRA 1, ARG10, FWC 5, USA 12x2.</p>
+            </div>
+            <select id="quickMode" aria-label="Modo de adicionar">
+              <option value="pack">Somar no meu álbum</option>
+              <option value="owned">Marcar como tenho</option>
+              <option value="missing">Zerar/remover</option>
+            </select>
+          </div>
+          <div class="quick-form">
+            <input
+              id="quickInput"
+              type="text"
+              inputmode="text"
+              autocomplete="off"
+              placeholder="Digite códigos separados por vírgula ou espaço"
+            />
+            <button id="quickAddButton" type="button">Aplicar</button>
+          </div>
+          <div class="quick-tools" aria-label="Ferramentas de entrada rápida">
+            <button class="tool-button" id="pasteListButton" type="button">Colar lista</button>
+            <button class="tool-button" id="voiceInputButton" type="button">Falar códigos</button>
+          </div>
+          <p class="inline-alert" id="quickResult" role="status" aria-live="polite"></p>
+          <div class="marking-help" aria-label="Como marcar figurinhas">
+            <span><b>Toque no card</b> alterna falta/tenho</span>
+            <span><b>+</b> soma repetida</span>
+            <span><b>-</b> corrige erro</span>
+          </div>
+        </section>
+
+        <nav class="tabs" aria-label="Seções do app">
+          <button class="tab-button active" data-view="album" type="button"><span></span>Álbum</button>
+          <button class="tab-button" data-view="missing" type="button"><span></span>Faltam</button>
+          <button class="tab-button" data-view="duplicates" type="button"><span></span>Repetidas</button>
+          <button class="tab-button" data-view="trades" type="button"><span></span>Trocas</button>
+          <button class="tab-button" data-view="settings" type="button"><span></span>Ajustes</button>
+        </nav>
+
+        <section class="toolbar" id="albumToolbar" aria-label="Filtros">
+          <input id="searchInput" type="search" placeholder="Buscar por código, país ou número" />
+          <select id="confedFilter" aria-label="Confederação">
+            <option value="all">Todas as regiões</option>
+          </select>
+          <select id="teamFilter" aria-label="Seleção">
+            <option value="all">Todas as seleções</option>
+          </select>
+          <select id="statusFilter" aria-label="Status">
+            <option value="all">Todas</option>
+            <option value="owned">Tenho</option>
+            <option value="missing">Faltam</option>
+            <option value="duplicates">Repetidas</option>
+          </select>
+        </section>
+
+        <section class="view active" id="view-album" aria-label="Álbum">
+          <div class="group-list" id="albumGroups"></div>
+        </section>
+
+        <section class="view" id="view-missing" aria-label="Figurinhas faltantes">
+          <div class="action-row">
+            <button id="shareMissingButton" type="button">Enviar faltantes no WhatsApp</button>
+            <button id="copyMissingButton" type="button">Copiar texto</button>
+          </div>
+          <textarea id="missingText" readonly></textarea>
+        </section>
+
+        <section class="view" id="view-duplicates" aria-label="Figurinhas repetidas">
+          <div class="action-row">
+            <button id="shareDupesButton" type="button">Enviar repetidas no WhatsApp</button>
+            <button id="copyDupesButton" type="button">Copiar texto</button>
+          </div>
+          <textarea id="dupesText" readonly></textarea>
+        </section>
+
+        <section class="view" id="view-trades" aria-labelledby="tradeTitle">
+          <div class="panel-header">
+            <div>
+              <h2 id="tradeTitle">Comparar com outra pessoa</h2>
+              <p>Cole aqui as repetidas e faltantes dela para descobrir trocas possíveis.</p>
+            </div>
+          </div>
+          <div class="trade-grid">
+            <label>
+              Repetidas da outra pessoa
+              <textarea id="friendDupesInput" placeholder="Ex.: BRA 2, ARG 10, FWC 3"></textarea>
+            </label>
+            <label>
+              Faltantes da outra pessoa
+              <textarea id="friendMissingInput" placeholder="Ex.: USA 1, JPN 7, GER 20"></textarea>
+            </label>
+          </div>
+          <div class="action-row">
+            <button id="compareButton" type="button">Comparar trocas</button>
+            <button id="shareTradeButton" type="button">Enviar proposta</button>
+          </div>
+          <div class="trade-result" id="tradeResult"></div>
+        </section>
+
+        <section class="view" id="view-settings" aria-labelledby="settingsTitle">
+          <h2 id="settingsTitle">Ajustes e segurança</h2>
+          <div class="settings-grid">
+            <label>
+              Nome ou apelido
+              <input id="profileName" type="text" maxlength="40" placeholder="Ex.: Vitor" />
+            </label>
+            <label>
+              Cidade/bairro
+              <input id="profileCity" type="text" maxlength="60" placeholder="Opcional" />
+            </label>
+            <label class="wide">
+              Ponto de troca preferido
+              <input
+                id="profileMeetup"
+                type="text"
+                maxlength="120"
+                placeholder="Ex.: shopping, escola com responsável, banca conhecida"
+              />
+            </label>
+          </div>
+          <div class="notice">
+            Este app salva dados apenas neste aparelho. Para crianças e adolescentes, marque
+            encontros somente em locais públicos e com responsável.
+          </div>
+          <div class="notice compact-notice">
+            Próxima fase recomendada: perfis e encontros precisam de login, moderação e regras
+            claras de segurança. Esta versão evita coletar dados sensíveis para poder ir ao ar
+            rápido.
+          </div>
+          <div class="action-row">
+            <button id="exportButton" type="button">Exportar backup</button>
+            <label class="file-button">
+              Importar backup
+              <input id="importInput" type="file" accept="application/json" />
+            </label>
+            <button class="danger" id="resetButton" type="button">Zerar meus dados</button>
+          </div>
+          <details>
+            <summary>Base usada e direitos</summary>
+            <p>
+              A base padrão usa 980 códigos: 20 especiais FWC e 48 seleções com 20 códigos
+              cada. Os dados foram montados a partir de informações públicas conferidas em
+              08/06/2026. O app não usa imagens, logos, escudos, fotos, marcas oficiais ou
+              material gráfico protegido.
+            </p>
+          </details>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app.js?v=8"></script>
+  </body>
+</html>
