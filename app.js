@@ -14,7 +14,7 @@ import {
   buildTradeText,
   normalizeText,
   formatPercent
-} from "./core.mjs?v=8";
+} from "./core.mjs?v=9";
 
 const $ = (selector) => document.querySelector(selector);
 const app = {
@@ -173,10 +173,13 @@ function renderStickerCard(item) {
   const count = app.state.counts[item.code] || 0;
   const status = count === 0 ? "missing" : count === 1 ? "owned" : "dupe";
   const label = count === 0 ? "Falta" : count === 1 ? "Tenho" : `${count - 1} rep.`;
+  const dupeBadge = count > 1 ? `<span class="dupe-badge">+${count - 1}</span>` : "";
+  const checkIcon = count > 0 ? '<span class="check-icon" aria-hidden="true">✓</span>' : "";
   const nextAction = count === 0 ? "marcar como tenho" : "remover do album";
   const ariaStatus = count === 0 ? "falta" : count === 1 ? "tenho uma" : `tenho ${count}, sendo ${count - 1} repetida`;
   return `
     <article class="sticker-card ${status}" data-code="${item.code}">
+      ${dupeBadge}
       <button
         class="sticker-main"
         type="button"
@@ -187,6 +190,7 @@ function renderStickerCard(item) {
       >
         <strong>${item.code}</strong>
         <span>${label}</span>
+        ${checkIcon}
       </button>
       <div class="counter">
         <button type="button" data-action="minus" data-code="${item.code}" aria-label="Remover ${item.code}">-</button>
