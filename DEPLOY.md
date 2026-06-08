@@ -18,6 +18,7 @@ processar cada clique.
 - Arquivo principal: `index.html`.
 - PWA/offline: `service-worker.js`.
 - Configs incluídas: `vercel.json`, `netlify.toml`, `_headers`, `.nojekyll`.
+- Analytics: Web Analytics ativo no Netlify em `Logs & metrics > Web Analytics`.
 
 ## Limite importante
 

@@ -2,6 +2,12 @@
   publish = "."
   command = ""
 
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/icon.svg"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/service-worker.js"
   [headers.values]

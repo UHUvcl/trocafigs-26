@@ -35,6 +35,7 @@ acessível para todas as idades.
 - Funcionar como PWA instalável.
 - Continuar funcionando offline depois do primeiro carregamento.
 - Salvar dados localmente no aparelho, sem exigir cadastro.
+- Acompanhar acessos gerais pelo Web Analytics do Netlify.
 
 ## Stack
 
@@ -58,6 +59,7 @@ Arquivos principais:
 - `service-worker.js`: cache offline e atualização de assets.
 - `manifest.webmanifest`: configuração PWA.
 - `tests/`: testes de regras e smoke tests públicos.
+- `docs/ANALYTICS.md`: acompanhamento de acessos e limites de medição.
 
 Mais detalhes em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
@@ -108,6 +110,14 @@ branch `main` atualiza os deploys conectados.
 - Arquivo principal: `index.html`.
 
 Detalhes em [DEPLOY.md](DEPLOY.md).
+
+## Analytics
+
+O Web Analytics do Netlify está ativo para acompanhar pageviews, visitantes
+únicos, origens, países, páginas acessadas e erros 404 sem instalar scripts de
+terceiros no app.
+
+Detalhes em [docs/ANALYTICS.md](docs/ANALYTICS.md).
 
 ## Privacidade e segurança
 
