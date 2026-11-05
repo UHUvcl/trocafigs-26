@@ -99,6 +99,25 @@ export function createInitialState() {
   };
 }
 
+export function parseBackup(text) {
+  const value = JSON.parse(text);
+  const isRecord = (item) => item !== null && typeof item === "object" && !Array.isArray(item);
+  if (
+    !isRecord(value) ||
+    value.version !== 1 ||
+    value.catalogVersion !== CATALOG_VERSION ||
+    !isRecord(value.counts) ||
+    !isRecord(value.profile) ||
+    !["name", "city", "meetup"].every((key) => typeof value.profile[key] === "string") ||
+    !Object.entries(value.counts).every(([code, count]) =>
+      catalogByCode.has(code) && Number.isInteger(count) && count >= 0 && count <= 999
+    )
+  ) {
+    throw new Error("Backup inválido ou incompatível.");
+  }
+  return sanitizeState(value);
+}
+
 export function sanitizeState(value) {
   const base = createInitialState();
   if (!value || typeof value !== "object") return base;

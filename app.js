@@ -4,6 +4,7 @@ import {
   catalogByCode,
   teams,
   sanitizeState,
+  parseBackup,
   createInitialState,
   computeStats,
   setCount,
@@ -336,12 +337,12 @@ async function importBackup(file) {
   if (!file) return;
   try {
     const text = await file.text();
-    const imported = sanitizeState(JSON.parse(text));
+    const imported = parseBackup(text);
     app.state = imported;
     persistAndRender("Backup importado.");
   } catch (error) {
     console.error(error);
-    showToast("Backup inválido. Confira se o arquivo JSON foi exportado pelo app.");
+    showToast("Backup inválido ou incompatível. Confira se o arquivo JSON foi exportado pelo app.");
   } finally {
     elements.importInput.value = "";
   }
